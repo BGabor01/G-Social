@@ -8,4 +8,4 @@ from user_app.models import UserProfileModel
 @receiver(post_save, sender=User)
 def create_profile(sender, instance, created, **kwargs):
     if created:
-        UserProfileModel.objects.create(user=instance)
+        UserProfileModel.objects.create(owner=instance)

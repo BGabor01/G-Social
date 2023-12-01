@@ -1,12 +1,16 @@
-from django.test import TestCase
-from django.urls import reverse
 from django.contrib.auth.models import User
+from django.urls import reverse
+from rest_framework.test import APITestCase
 
 
-class UserAppTest(TestCase):
+class AuthTest(APITestCase):
+    USERNAME = 'testloginuser'
+    PASSWORD = 'asdasd123'
+    EMAIL = 'test@login.com'
+
     def setUp(self):
-        User.objects.create_user(username='testloginuser', password='asdasd123',
-                                 first_name='test', last_name='login', email='test@login.com')
+        User.objects.create_user(username=self.USERNAME, password=self.PASSWORD,
+                                 first_name='test', last_name='login', email=self.EMAIL)
 
     def test_registration_success(self):
         response = self.client.post(reverse('create_user'), data={
@@ -29,14 +33,14 @@ class UserAppTest(TestCase):
 
     def test_login_success(self):
         response = self.client.post(reverse('login'), data={
-            'username': 'testloginuser',
-            'password': 'asdasd123',
+            'username': self.USERNAME,
+            'password': self.PASSWORD,
         })
         self.assertEqual(response.status_code, 200)
 
     def test_login_fail(self):
         response = self.client.post(reverse('login'), data={
-            'username': 'testloginuser2',
-            'password': 'mjfhzeiw',
+            'username': 'wronguser',
+            'password': 'wrongpassword',
         })
         self.assertEqual(response.status_code, 401)

@@ -8,4 +8,10 @@ class UserProfileUpdateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = UserProfileModel
-        fields = ["profile_picture"]
+        fields = ['profile_picture']
+
+
+class ProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UserProfileModel
+        fields = '__all__'

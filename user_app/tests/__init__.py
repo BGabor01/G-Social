@@ -1,0 +1,3 @@
+from .test_auth import AuthTest
+from .test_retrieve_user import RetrieveUserDataViewTests
+from .test_update_profile import UpdateProfileViewTestsWithJWT

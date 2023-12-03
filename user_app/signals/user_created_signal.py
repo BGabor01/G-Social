@@ -5,6 +5,9 @@ from django.dispatch import receiver
 from user_app.models import UserProfileModel
 from user_app.rpc import welcome_rpc_client
 
+import logging
+logger = logging.getLogger("user_app")
+
 
 @receiver(post_save, sender=User)
 def create_profile(sender: User, instance: User, created: bool, **kwargs) -> None:
@@ -26,4 +29,9 @@ def create_profile(sender: User, instance: User, created: bool, **kwargs) -> Non
     """
     if created:
         UserProfileModel.objects.create(owner=instance)
-        welcome_rpc_client.send_request("registration", instance.email)
+        logger.info("Profile created!")
+        try:
+            welcome_rpc_client.send_request("registration", instance.email)
+            logger.info("Welcome e-mail sent!")
+        except TimeoutError as e:
+            logger.error(f"Faild to send e-mail: {e}")

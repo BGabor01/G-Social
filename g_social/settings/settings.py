@@ -25,8 +25,6 @@ BASE_DIR = Path(__file__).resolve().parents[2]
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ.get("DEV_SECRET_KEY")
 
-print(SECRET_KEY)
-# SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = []
@@ -154,3 +152,24 @@ SIMPLE_JWT = {
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "handlers": {
+        "console": {
+            "class": "logging.StreamHandler",
+        },
+    },
+    "formatters": {
+        "verbose": {
+            "format": "{levelname} {asctime} {module} {message}",
+            "style": "{",
+        }
+    },
+    "user_app": {
+        "handlers": ["console"],
+        "level": os.environ.get(f"LOG_LEVEL_{os.environ.get('ENVIRONMENT')}"),
+        "formatters": ["verbose"]
+    }
+}

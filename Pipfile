@@ -9,6 +9,8 @@ djangorestframework = "~=3.14"
 djangorestframework-simplejwt = "~=5.3"
 pillow = "~=10.1"
 g-rpc = {git = "git+https://github.com/BGabor01/G-Rpc#egg=g-rpc"}
+mysqlclient = "~=2.2.0"
+python-dotenv = "~=1.0"
 
 [dev-packages]
 

@@ -11,6 +11,7 @@ import os
 
 from django.core.wsgi import get_wsgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'g_social.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE',
+                          f'g_social.settings.settings_{os.environ.get("ENVIRONMENT")}')
 
 application = get_wsgi_application()

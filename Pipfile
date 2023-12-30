@@ -12,6 +12,8 @@ g-rpc = {git = "git+https://github.com/BGabor01/G-Rpc#egg=g-rpc"}
 mysqlclient = "~=2.2.0"
 python-dotenv = "~=1.0.0"
 gunicorn = "~=21.2"
+celery = "~=5.3.6"
+redis = "~=5.0.1"
 
 [dev-packages]
 

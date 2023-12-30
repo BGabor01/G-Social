@@ -11,12 +11,12 @@ RUN pip install pipenv --no-cache
 WORKDIR /usr/src/app/
 
 COPY ./Pipfile ./Pipfile
-COPY ./bash_scripts/celey_entrypoint.sh ./celey_entrypoint.sh
+COPY ./bash_scripts/celery_entrypoint.sh ./celery_entrypoint.sh
 COPY ./bash_scripts/django_entrypoint.sh ./django_entrypoint.sh
 COPY ./bash_scripts/wait_for_service.sh ./wait_for_service.sh
 
 RUN chmod +x ./django_entrypoint.sh
-RUN chmod +x ./celey_entrypoint.sh
+RUN chmod +x ./celery_entrypoint.sh
 RUN chmod +x ./wait_for_service.sh
 RUN pipenv install
 

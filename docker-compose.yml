@@ -65,7 +65,7 @@ services:
     restart: unless-stopped
     build:
       context: .
-    command: ./celey_entrypoint.sh
+    command: ./celery_entrypoint.sh
     environment:
       - ENVIRONMENT=prod
       - RABBITMQ_HOST=rabbitmq

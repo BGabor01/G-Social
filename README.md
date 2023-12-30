@@ -25,9 +25,9 @@ Trello table: https://trello.com/b/iaBLXGKE/g-social
 
 | View                | Description                                | Serializer                     |
 |---------------------|--------------------------------------------|--------------------------------|
-| `CreateUserView`      | API view for creating new users            | `RegistrationSerializer`       |
-| `RetrieveUserDataView` | API view for retrieving a user's data      | `UserDataSerializer`           |
-| `UpdateProfileView`   | API view for updating a user's profile     | `UserProfileUpdateSerializer`  |
+| `CreateUserView`      | CreateAPIView for creating new users            | `RegistrationSerializer`       |
+| `RetrieveUserDataView` | RetrieveAPIView for retrieving a user's data      | `UserDataSerializer`           |
+| `UpdateProfileView`   | UpdateAPIView for updating a user's profile     | `UserProfileUpdateSerializer`  |
 
 #### Signals
 | Name            | Description                        |

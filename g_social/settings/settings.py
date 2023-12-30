@@ -173,3 +173,5 @@ LOGGING = {
         "formatters": ["verbose"]
     }
 }
+
+CELERY_BROKER_URL = 'redis://localhost:6379/0'

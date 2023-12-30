@@ -1,0 +1,57 @@
+version: '3.8'
+
+services:
+  rabbitmq:
+    image: rabbitmq:3-management
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+    environment:
+      - RABBITMQ_DEFAULT_USER=user
+    env_file:
+      - .env
+
+  mysql:
+    image: mysql:latest
+    volumes:
+      - mysql_data:/var/lib/mysql
+    environment:
+      - MYSQL_DATABASE=g_social
+    env_file:
+      - .env
+
+  nginx:
+    image: nginx:latest
+    restart: always
+    ports:
+      - "80:80"
+    volumes:
+      - static_volume:/usr/share/nginx/html/static/
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - django
+  
+  django:
+    build: .
+    command: pipenv run gunicorn -c g_social/gunicorn.conf.py g_social.wsgi:application --bind 0.0.0.0:8000
+    volumes:
+      - static_volume:/usr/src/app/static/
+    ports:
+      - "8000:8000"
+    environment:
+      - ENVIRONMENT=prod
+      - RABBITMQ_HOST=rabbitmq
+      - RABBITMQ_USER=user
+      - DATABASE_HOST=mysql
+      - DATABASE_PORT=3306
+      - DATABASE_USER=root
+    env_file:
+      - .env
+    depends_on:
+      - rabbitmq
+      - mysql
+
+volumes:
+  mysql_data:
+  rabbitmq_data:
+  static_volume:
+    

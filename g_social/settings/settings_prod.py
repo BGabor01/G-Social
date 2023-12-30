@@ -6,4 +6,6 @@ ALLOWED_HOSTS = ['django','127.0.0.1','localhost']
 
 USE_X_FORWARDED_HOST = True
 
+CELERY_BROKER_URL = os.environ.get("CELERY_BROKER_URL")
+
 DEBUG = False

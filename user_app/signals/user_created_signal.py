@@ -3,7 +3,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 from user_app.models import UserProfileModel
-from user_app.rpc import welcome_rpc_client
+from user_app.tasks.welcome_email_task import send_welcome_email
 
 import logging
 logger = logging.getLogger("user_app")
@@ -30,8 +30,5 @@ def create_profile(sender: User, instance: User, created: bool, **kwargs) -> Non
     if created:
         UserProfileModel.objects.create(owner=instance)
         logger.info("Profile created!")
-        try:
-            welcome_rpc_client.send_request("registration", instance.email)
-            logger.info("Welcome e-mail sent!")
-        except TimeoutError as e:
-            logger.error(f"Faild to send e-mail: {e}")
+        send_welcome_email.delay(instance.email)
+

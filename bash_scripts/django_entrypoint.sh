@@ -1,6 +1,6 @@
 #!/bin/sh
 
-. ./wait_for_service.sh
+. ./bash_scripts/wait_for_service.sh
 
 # Wait for the database to be ready
 wait_for_service $DATABASE_HOST $DATABASE_PORT

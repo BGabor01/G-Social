@@ -1,6 +1,6 @@
 #!/bin/sh
 
-. ./wait_for_service.sh
+. ./bash_scripts/wait_for_service.sh
 
 # Wait for RabbitMQ to be ready
 wait_for_service $RABBITMQ_HOST 5672  

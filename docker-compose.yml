@@ -4,7 +4,7 @@ services:
   django:
     build:
       context: .
-    command: ./django_entrypoint.sh
+    command: ./bash_scripts/django_entrypoint.sh
     volumes:
       - static_volume:/usr/src/app/static/
       - media_volume:/usr/src/app/media/
@@ -32,6 +32,11 @@ services:
       - RABBITMQ_DEFAULT_USER=user
     env_file:
       - .env
+    healthcheck:
+      test: ["CMD", "rabbitmqctl", "status"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
 
   mysql:
     image: mysql:latest
@@ -41,6 +46,11 @@ services:
       - MYSQL_DATABASE=g_social
     env_file:
       - .env
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
 
   redis:
     image: redis:alpine
@@ -48,6 +58,11 @@ services:
     command: redis-server
     volumes:
       - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
 
   nginx:
     image: nginx:latest
@@ -65,7 +80,7 @@ services:
     restart: unless-stopped
     build:
       context: .
-    command: ./celery_entrypoint.sh
+    command: ./bash_scripts/celery_entrypoint.sh
     environment:
       - ENVIRONMENT=prod
       - RABBITMQ_HOST=rabbitmq
@@ -80,6 +95,11 @@ services:
       - django
       - redis
       - rabbitmq
+    healthcheck:
+      test: ["CMD-SHELL", "celery -A g_social inspect ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
 
 volumes:
   mysql_data:

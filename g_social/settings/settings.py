@@ -44,6 +44,9 @@ INSTALLED_APPS = [
     # external apps
     'rest_framework',
     'rest_framework_simplejwt.token_blacklist',
+    'health_check',
+    'health_check.db',
+    'health_check.contrib.celery_ping',
 ]
 
 MIDDLEWARE = [

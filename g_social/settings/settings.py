@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     # apps
-    'user_app',
+    'apps.user_app',
     # external apps
     'rest_framework',
     'rest_framework_simplejwt.token_blacklist',
@@ -178,3 +178,4 @@ LOGGING = {
 }
 
 CELERY_BROKER_URL = 'redis://localhost:6379/0'
+

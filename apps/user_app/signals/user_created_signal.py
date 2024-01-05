@@ -2,8 +2,8 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
-from user_app.models import UserProfileModel
-from user_app.tasks.welcome_email_task import send_welcome_email
+from apps.user_app.models import UserProfileModel
+from apps.user_app.tasks.welcome_email_task import send_welcome_email
 
 import logging
 logger = logging.getLogger("user_app")

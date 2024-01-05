@@ -2,9 +2,9 @@ from rest_framework import generics
 from rest_framework import permissions
 from django.contrib.auth.models import User
 
-from user_app.serializers import RegistrationSerializer, UserDataSerializer, UserProfileUpdateSerializer
-from user_app.permissions.IsOwnerPermission import IsOwner
-from user_app.models import UserProfileModel
+from apps.user_app.serializers import RegistrationSerializer, UserDataSerializer, UserProfileUpdateSerializer
+from apps.user_app.permissions.IsOwnerPermission import IsOwner
+from apps.user_app.models import UserProfileModel
 
 
 class CreateUserView(generics.CreateAPIView):

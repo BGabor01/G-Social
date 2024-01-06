@@ -3,7 +3,7 @@ from rest_framework import permissions
 from django.contrib.auth.models import User
 
 from apps.user_app.serializers import RegistrationSerializer, UserDataSerializer, UserProfileUpdateSerializer
-from apps.user_app.permissions.IsOwnerPermission import IsOwner
+from apps.components.permissions import IsOwner
 from apps.user_app.models import UserProfileModel
 
 

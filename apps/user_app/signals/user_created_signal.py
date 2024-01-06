@@ -29,6 +29,6 @@ def create_profile(sender: User, instance: User, created: bool, **kwargs) -> Non
     """
     if created:
         UserProfileModel.objects.create(owner=instance)
-        logger.info("Profile created!")
+        logger.info('Profile created!')
         send_welcome_email.delay(instance.email)
 

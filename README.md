@@ -3,63 +3,57 @@ A simple social media platform. <br>
 Trello table: https://trello.com/b/iaBLXGKE/g-social
 
 ## Project Overview
+G-Social is designed as a comprehensive social media platform.
 
-### Project Components
+### Key Infrastructure Elements
 
-| Component        | Description                                                          |
-|------------------|----------------------------------------------------------------------|
-| **Database**     | MySQL                                                                |
-| **Message Broker for Celery** | Redis for managing Celery tasks and queues                    |
-| **RPC with Celery** | RabbitMQ for handling RPC calls within Celery tasks                 |
-| **Web Server**   | Nginx                                                                |
-| **Django App**   | `user_app` - Handles user authentication and profile management       |
-| **Celery Worker** | Handles asynchronous tasks such as email sending and RPC operations |
+- **Django**: A versatile framework that forms the backbone of our web application, known for its ease of use and robustness.
+- **Celery**: An asynchronous task queue/job queue based on distributed message passing. Used for handling background tasks.
+- **Redis**: Employed as the Celery broker for managing task queues and efficient processing of background tasks.
+- **MySQL**: Relational database.
+- **Nginx**: A high-performance web server, handling HTTP requests and serving static and media files.
+- **RabbitMQ**: Acts as the RPC client, managing Remote Procedure Calls within the system for distributed and asynchronous task execution.
 
-### Django `user_app` Details
+### Django Apps
 
-#### Models
+- **user_app**: Handles user authentication and profile management. For more details, see the [user_app's README file](apps/user_app/README.md).
 
-| Model            | Description                        |
-|------------------|------------------------------------|
-| `UserProfileModel` | Stores user profile information    |
+- **post_app**: Handles post management. For more details, see the [post_app's README file](apps/post_app/README.md)
 
-#### Views
+### Database Model Description
+The User table is a core component of Django's built-in modules, and its unique user ID serves as the owner ID in both of the remaining two tables.
 
-| View                | Description                                | Serializer                     |
-|---------------------|--------------------------------------------|--------------------------------|
-| `CreateUserView`      | CreateAPIView for creating new users            | `RegistrationSerializer`       |
-| `RetrieveUserDataView` | RetrieveAPIView for retrieving a user's data      | `UserDataSerializer`           |
-| `UpdateProfileView`   | UpdateAPIView for updating a user's profile     | `UserProfileUpdateSerializer`  |
+| Tabel | Model |
+|-----------|----|
+| auth_user | User |
+| post_app_postmodel | PostModel |
+| user_app_userprofilemodel  | UserProfileModel    |
 
-#### Signals
-| Name            | Description                        |
-|------------------|------------------------------------|
-| `create_profile` | When a new user is created, creates a new profile record for the user   |
+<img src="readme_files/database_diagram.png" alt="Generated in MySql workbanch" title="Database diagram" width=500px/>
 
-#### Celery Tasks
 
-| Task                | Description                                  |
-|---------------------|----------------------------------------------|
-| `send_welcome_email` | Sends a welcome email to new users. Triggered by the `create_profile` signal. |
+## Docker Compose Setup
 
-#### Permissions
+For production the project uses docker.
 
-| Permission          | Description                                        |
-|---------------------|----------------------------------------------------|
-| `IsOwner`             | Ensures a user is the owner of the profile to update |
+### Env file
+**Django**
+- DEV_SECRET_KEY 
+- TEST_SECRET_KEY 
+- PROD_SECRET_KEY
+- LOG_LEVEL_DEV 
+- LOG_LEVEL_TEST
+- LOG_LEVEL_PROD
+- RABBITMQ_PASS
+- DATABASE_NAME 
+- DATABASE_USER
+- DATABASE_PASSWORD
 
-## Docker Compose Setup - production
+**RabbitMQ**
+- RABBITMQ_DEFAULT_PASS
 
-### Services
-
-| Service       | Technology       | Description                                           |
-|---------------|------------------|-------------------------------------------------------|
-| **rabbitmq**  | RabbitMQ         | Used for RPC calls within Celery tasks                |
-| **redis**     | Redis            | Message broker service for Celery task management     |
-| **mysql**     | MySQL            | Database service                                      |
-| **nginx**     | Nginx            | Web server, serves static and media files             |
-| **django**    | Django/Gunicorn  | Runs the Django application using Gunicorn            |
-| **celery**    | Celery           | Asynchronous task worker for handling background tasks |
+**Database**
+- MYSQL_ROOT_PASSWORD
 
 ### Volumes
 
@@ -70,8 +64,3 @@ Trello table: https://trello.com/b/iaBLXGKE/g-social
 | `redis_data`     | Persistent data for Redis        |
 | `static_volume`  | Stores Django static files       |
 | `media_volume`   | Stores Django media files        |
-
-## Nginx Configuration
-
-- Handles static and media file serving.
-- Proxies requests to the Django application.

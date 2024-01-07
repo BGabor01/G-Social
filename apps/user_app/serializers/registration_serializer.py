@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
 from django.contrib.auth.hashers import make_password
+from django.contrib.auth.password_validation import validate_password
 
 
 class RegistrationSerializer(serializers.ModelSerializer):
@@ -23,7 +24,7 @@ class RegistrationSerializer(serializers.ModelSerializer):
     """
     email = serializers.EmailField(required=True)
     password = serializers.CharField(
-        write_only=True, style={'input_type': 'password'})
+        write_only=True, style={'input_type': 'password'},validators=[validate_password])
     first_name = serializers.CharField(required=True)
     last_name = serializers.CharField(required=True)
 
@@ -31,6 +32,11 @@ class RegistrationSerializer(serializers.ModelSerializer):
         model = User
         fields = ['username', 'password',
                   'first_name', 'last_name', 'email']
+        
+    def validate_email(self, value):
+        if User.objects.filter(email=value).exists():
+            raise serializers.ValidationError("A user with this email already exists.")
+        return value
 
     def create(self, validated_data) -> User:
         """

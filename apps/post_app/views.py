@@ -29,6 +29,7 @@ class ListOrCreatePostView(generics.ListCreateAPIView):
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
 
+
 class UpdateOrDeletePostView(generics.UpdateAPIView, generics.DestroyAPIView):
     """
     API view for updating or deleting a post.
@@ -44,6 +45,7 @@ class UpdateOrDeletePostView(generics.UpdateAPIView, generics.DestroyAPIView):
     permission_classes = [IsAuthenticated, IsOwner]
     serializer_class = PostSerializer
     queryset = PostModel.objects.all()
+
 
 class RetrievePostView(generics.RetrieveAPIView):
     """

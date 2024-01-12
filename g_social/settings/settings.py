@@ -27,7 +27,7 @@ SECRET_KEY = os.environ.get("DEV_SECRET_KEY")
 
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost','127.0.0.1']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
 
 # Application definition
@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     # apps
     'apps.user_app',
     'apps.post_app',
+    'apps.friend_app',
     # external apps
     'rest_framework',
     'rest_framework_simplejwt.token_blacklist',
@@ -185,4 +186,3 @@ LOGGING = {
 }
 
 CELERY_BROKER_URL = 'redis://localhost:6379/0'
-

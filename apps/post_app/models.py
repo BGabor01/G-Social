@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+
 class PostModel(models.Model):
     """
     Model representing a post in a social media application.
@@ -20,7 +21,8 @@ class PostModel(models.Model):
     Methods:
         - __str__(self): Returns a string representation of the post, typically used for debugging purposes.
     """
-    owner = models.ForeignKey(User, on_delete=models.CASCADE)
+    owner = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name="post_owner")
     text = models.CharField(max_length=255, blank=True, null=True)
     image = models.ImageField(blank=True, null=True, upload_to="user_pics")
     created_at = models.DateTimeField(auto_now_add=True, db_index=True)

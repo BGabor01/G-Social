@@ -3,6 +3,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 from apps.user_app.models import UserProfileModel
+from apps.friend_app.models import FriendListModel
 from apps.user_app.tasks.welcome_email_task import send_welcome_email
 
 import logging
@@ -30,5 +31,8 @@ def create_profile(sender: User, instance: User, created: bool, **kwargs) -> Non
     if created:
         UserProfileModel.objects.create(owner=instance)
         logger.info('Profile created!')
-        send_welcome_email.delay(instance.email)
 
+        FriendListModel.objects.create(owner=instance)
+        logger.info("Friend list created!")
+
+        send_welcome_email.delay(instance.email)

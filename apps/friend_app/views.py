@@ -62,3 +62,11 @@ class DeclineFriednRequestView(generics.DestroyAPIView):
         friend_request = self.get_object()
         friend_request.decline_friend_request()
         return Response({"details": "Friend request declined."}, status=status.HTTP_200_OK)
+
+
+class ListFriendsView(generics.ListAPIView):
+    permission_classes = [IsAuthenticated]
+    serializer_class = ListFriendsSerializer
+
+    def get_queryset(self):
+        return FriendListModel.objects.filter(owner=self.request.user)

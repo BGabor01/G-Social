@@ -33,19 +33,19 @@ class FriendListModel(models.Model):
 class FriendRequestModel(models.Model):
     sender = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name='sender')
-    reciever = models.ForeignKey(
-        User, on_delete=models.CASCADE, related_name='reciever')
+    receiver = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name='receiver')
     is_active = models.BooleanField(blank=True, null=False, default=True)
     created_at = models.DateTimeField(auto_now_add=True, db_index=True)
 
     def __str__(self):
         return self.sender.username
 
-    def accept_friend_request(self, reciever: User):
+    def accept_friend_request(self, receiver: User):
         sender_friend_list = FriendListModel.objects.get(owner=self.sender)
-        reciever_friend_list = FriendListModel.objects.get(owner=reciever)
-        sender_friend_list.add_friend(reciever)
-        reciever_friend_list.add_friend(self.sender)
+        receiver_friend_list = FriendListModel.objects.get(owner=receiver)
+        sender_friend_list.add_friend(receiver)
+        receiver_friend_list.add_friend(self.sender)
         self.is_active = False
         self.save()
 

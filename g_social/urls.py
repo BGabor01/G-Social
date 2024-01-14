@@ -24,7 +24,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/user/', include('apps.user_app.urls')),
     path('api/post/', include('apps.post_app.urls')),
-    path('api/health/', include('health_check.urls'))
+    path('api/health/', include('health_check.urls')),
+    path('api/friend/', include('apps.friend_app.urls'))
 ]
 if settings.DEBUG:
     urlpatterns + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

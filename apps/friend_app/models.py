@@ -41,10 +41,10 @@ class FriendRequestModel(models.Model):
     def __str__(self):
         return self.sender.username
 
-    def accept_friend_request(self, receiver: User):
+    def accept_friend_request(self):
         sender_friend_list = FriendListModel.objects.get(owner=self.sender)
-        receiver_friend_list = FriendListModel.objects.get(owner=receiver)
-        sender_friend_list.add_friend(receiver)
+        receiver_friend_list = FriendListModel.objects.get(owner=self.receiver)
+        sender_friend_list.add_friend(self.receiver)
         receiver_friend_list.add_friend(self.sender)
         self.is_active = False
         self.save()

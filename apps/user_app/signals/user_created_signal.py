@@ -1,6 +1,9 @@
+import os
+
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from django.conf import settings
 
 from apps.user_app.models import UserProfileModel
 from apps.friend_app.models import FriendListModel
@@ -34,5 +37,5 @@ def create_profile(sender: User, instance: User, created: bool, **kwargs) -> Non
 
         FriendListModel.objects.create(owner=instance)
         logger.info("Friend list created!")
-
-        send_welcome_email.delay(instance.email)
+        if not settings.DEBUG:
+            send_welcome_email.delay(instance.email)

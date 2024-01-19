@@ -7,6 +7,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 
 from apps.friend_app.models import FriendRequestModel, FriendListModel
 from apps.friend_app.serializers import FriendRequestSerializer, SendFriendRequestSerializer, AlterFriendRequestSerializer, ListFriendsSerializer
+from apps.components.permissions import IsRequestOwner
 
 
 class ListFriendRequestsView(generics.ListAPIView):
@@ -25,7 +26,7 @@ class SendFriendRequestView(generics.CreateAPIView):
 
 
 class AcceptFriendRequestView(generics.UpdateAPIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, IsRequestOwner]
     serializer_class = AlterFriendRequestSerializer
 
     def get_queryset(self):
@@ -45,7 +46,7 @@ class AcceptFriendRequestView(generics.UpdateAPIView):
 
 
 class DeclineFriednRequestView(generics.DestroyAPIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, IsRequestOwner]
     serializer_class = AlterFriendRequestSerializer
 
     def get_queryset(self):

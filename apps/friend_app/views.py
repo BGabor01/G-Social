@@ -11,6 +11,21 @@ from apps.components.permissions import IsRequestOwner
 
 
 class ListFriendRequestsView(generics.ListAPIView):
+    """
+    API view for listing friend requests.
+
+    This view provides a list of friend requests targeted to the currently authenticated user.
+    It includes filtering capabilities, primarily focusing on the 'is_active' field of the friend requests.
+
+    Attributes:
+        - serializer_class (FriendRequestSerializer): The serializer class used for friend request instances.
+        - permission_classes (list): Ensures that only authenticated users can access this view.
+        - filter_backends (list): Specifies DjangoFilterBackend as the backend for filtering the queryset.
+        - filterset_fields (list of str): Defines the fields on which the queryset can be filtered. In this case, 'is_active'.
+
+    Methods:
+        - get_queryset(self): Returns a queryset of FriendRequestModel instances where the receiver is the current user.
+    """
     serializer_class = FriendRequestSerializer
     permission_classes = [IsAuthenticated]
     filter_backends = [DjangoFilterBackend]
@@ -26,6 +41,20 @@ class SendFriendRequestView(generics.CreateAPIView):
 
 
 class AcceptFriendRequestView(generics.UpdateAPIView):
+    """
+    API view for accepting a friend request.
+
+    This view allows an authenticated user to accept a friend request. It uses the AlterFriendRequestSerializer and includes an additional permission to ensure that only the recipient of the friend request can accept it.
+
+    Attributes:
+        - permission_classes (list): Ensures that only authenticated users and the request owner can access this view.
+        - serializer_class (AlterFriendRequestSerializer): Serializer for updating friend requests.
+
+    Methods:
+        - get_queryset(self): Returns friend requests where the current user is the receiver.
+        - get_object(self): Retrieves a specific friend request based on the provided ID.
+        - update(self, request, *args, **kwargs): Handles the acceptance of a friend request.
+    """
     permission_classes = [IsAuthenticated, IsRequestOwner]
     serializer_class = AlterFriendRequestSerializer
 
@@ -46,6 +75,21 @@ class AcceptFriendRequestView(generics.UpdateAPIView):
 
 
 class DeclineFriednRequestView(generics.DestroyAPIView):
+    """
+    API view for declining a friend request.
+
+    This view allows an authenticated user to decline a friend request.
+    It uses the AlterFriendRequestSerializer and includes an additional permission to ensure that only the recipient of the friend request can decline it.
+
+    Attributes:
+        - permission_classes (list): Ensures that only authenticated users and the request owner can access this view.
+        - serializer_class (AlterFriendRequestSerializer): Serializer for updating friend requests.
+
+    Methods:
+        - get_queryset(self): Returns friend requests where the current user is the receiver.
+        - get_object(self): Retrieves a specific friend request based on the provided ID.
+        - destroy(self, request, *args, **kwargs): Handles the declining of a friend request.
+    """
     permission_classes = [IsAuthenticated, IsRequestOwner]
     serializer_class = AlterFriendRequestSerializer
 
@@ -66,6 +110,18 @@ class DeclineFriednRequestView(generics.DestroyAPIView):
 
 
 class ListFriendsView(generics.ListAPIView):
+    """
+    API view for listing friends.
+
+    This view provides a list of friends for the currently authenticated user. It uses the ListFriendsSerializer to represent the friend data. Access to this view is restricted to authenticated users.
+
+    Attributes:
+        - permission_classes (list): Ensures that only authenticated users can access this view.
+        - serializer_class (ListFriendsSerializer): Serializer for listing friends.
+
+    Methods:
+        - get_queryset(self): Returns the friend list of the current user.
+    """
     permission_classes = [IsAuthenticated]
     serializer_class = ListFriendsSerializer
 

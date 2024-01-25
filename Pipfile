@@ -18,6 +18,8 @@ django-health-check = "~=3.17"
 django-filter = "~=23.5"
 
 [dev-packages]
+django-extensions = "~=3.2.3"
+pydotplus = "*"
 
 [requires]
 python_version = "3.11"

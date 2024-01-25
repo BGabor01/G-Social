@@ -25,7 +25,7 @@ class UserProfileModel(models.Model):
                  which is the username of the owner appended with 's profile'.
     """
     owner = models.OneToOneField(
-        User, on_delete=models.CASCADE, related_name='profile_data')
+        User, on_delete=models.CASCADE, related_name='profile_owner')
     profile_picture = models.ImageField(
         default='profile_pics/default.jpg', upload_to='profile_pics')
 

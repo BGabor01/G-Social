@@ -8,6 +8,8 @@ wait_for_service $DATABASE_HOST $DATABASE_PORT
 # Wait for RabbitMQ to be ready
 wait_for_service $RABBITMQ_HOST 5672  
 
+echo "Creating database migration files..."
+pipenv run python manage.py makemigrations --noinput
 # Apply database migrations
 echo "Applying database migrations..."
 pipenv run python manage.py migrate --noinput

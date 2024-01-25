@@ -1,5 +1,6 @@
 from rest_framework.pagination import CursorPagination
 
+
 class PostCursorPagination(CursorPagination):
     """
     Cursor pagination for post instances.

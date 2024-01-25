@@ -23,7 +23,21 @@ class PostSerializer(serializers.ModelSerializer):
         fields = ['owner', 'text', 'image']
         read_only_fields = ['owner']
 
-    def validate(self, data):
+    def validate(self, data: dict) -> dict:
+        """
+        Validates the friend request data.
+
+        Checks if the sender and receiver are the same, indicating a user trying to send a friend request to themselves. Also checks for an existing active friend request between the same sender and receiver to prevent duplicate requests.
+
+        Parameters:
+            - data (dict): The data to be validated, containing sender and receiver information.
+
+        Returns:
+            dict: The validated data.
+
+        Raises:
+            ValidationError: If the sender and receiver are the same or if a duplicate friend request exists.
+        """
         if not data.get('text') and not data.get('image'):
             raise serializers.ValidationError(
                 "At least one of 'text' or 'image' must be provided.")

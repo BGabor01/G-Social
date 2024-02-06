@@ -16,9 +16,9 @@ G-Social is designed as a comprehensive social media platform.
 
 ### Django Apps
 
-- **user_app**: Handles user authentication and profile management. For more details, see the [user_app's README file](apps/user_app/README.md).
-- **post_app**: Handles post management. For more details, see the [post_app's README file](apps/post_app/README.md)
-- **friend_app**: Handles friend management.  For more details, see the [friend_app's README file](apps/friend_app/README.md)
+- **user_app**: Handles user authentication and profile management. For more details, see the [user_app's README file](backend/apps/user_app/README.md).
+- **post_app**: Handles post management. For more details, see the [post_app's README file](backend/apps/post_app/README.md)
+- **friend_app**: Handles friend management.  For more details, see the [friend_app's README file](backend/apps/friend_app/README.md)
 
 ### Database Model Description
 The User table is a core component of Django's built-in modules.

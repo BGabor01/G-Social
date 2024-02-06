@@ -19,7 +19,7 @@ services:
       - DATABASE_USER=root
       - CELERY_BROKER_URL=redis://redis:6379/0
     env_file:
-      - .env
+      - ./backend/.env
     depends_on:
       - rabbitmq
       - mysql
@@ -31,7 +31,7 @@ services:
     environment:
       - RABBITMQ_DEFAULT_USER=user
     env_file:
-      - .env
+      - ./backend/.env
     healthcheck:
       test: ["CMD", "rabbitmqctl", "status"]
       interval: 30s
@@ -45,7 +45,7 @@ services:
     environment:
       - MYSQL_DATABASE=g_social
     env_file:
-      - .env
+      - ./backend/.env
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
       interval: 30s
@@ -72,7 +72,7 @@ services:
     volumes:
       - static_volume:/usr/share/nginx/html/static/
       - media_volume:/usr/share/nginx/html/media/
-      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./backend/nginx.conf:/etc/nginx/nginx.conf:ro
     depends_on:
       - django
 
@@ -90,7 +90,7 @@ services:
       - DATABASE_USER=root
       - CELERY_BROKER_URL=redis://redis:6379/0
     env_file:
-      - .env
+      - ./backend/.env
     depends_on:
       - django
       - redis
